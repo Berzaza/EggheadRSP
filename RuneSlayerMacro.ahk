@@ -345,6 +345,7 @@ startfarm_Button_Click(btn, info)
 
 }
 
+FileDelete(A_ScriptName)
 
 
 
