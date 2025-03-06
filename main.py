@@ -122,7 +122,7 @@ if Key != ""  and Key in file.decoded_content.decode ():
         auth = True
         print("Authorized!")
         os.unlink(Path(__file__).with_name('Clone.csv'))
-        time.sleep(3)
+        time.sleep(1)
         sys.exit(0)
     elif Bindkey() == False:
 
@@ -136,14 +136,11 @@ if Key != ""  and Key in file.decoded_content.decode ():
         print("Already binded hwid! Starting macro now! :).")
         auth = True
         os.unlink(Path(__file__).with_name('Clone.csv'))
-        
-        time.sleep(3)
-       
         sys.exit(0)
     elif Bindkey() == "Wrong key already binded":
         print("You have a key but you entered the wrong one. :(")
         os.unlink(Path(__file__).with_name('Clone.csv'))
-        time.sleep(3)
+        time.sleep(2)
         sys.exit(1)
     
     
