@@ -17,8 +17,8 @@ from dotenv import load_dotenv
 import subprocess
 import re
  
-Key = "M0dxbzufcG0huxML89yiiYw71d7mD8"
-#Key = str(sys.argv[1])
+#Key = "M0dxbzufcG0huxML89yiiYw71d7mD8"
+Key = str(sys.argv[1])
 hwid = str(subprocess.check_output(
     'wmic csproduct get uuid')).split('\\r\\n')[1].strip('\\r').strip()
 #f = open(Path(__file__).with_name('.env'), "a")
@@ -31,7 +31,7 @@ sha = re.split(r'\t+', stdout.decode('ascii'))[0]
 
 
 
-line = str(base64.b64decode("Z2hwXzRLVWZJT3dFYlJqMEFhTHhFUkxsTnRocTRpY3VjaTQ1c05xRA=="))
+line = str(base64.b64decode("Z2l0a'HVi'X3!Bhd'F8'xM!UFVN'VBD'S0EwV'TNRZjN'2N!l'BUa'nNwX1cxWTJ!iS''1VmNktQ'b0!'Y4TE'g4dVB5RDZ'GVX'!R'1em9SamIw!a1JV'T'lh3!MDBR'bn!ZQWTZFVF'dGNHcz'Tm80UmVM"))
 
 thing = re.sub("[!@#$,']", '', line)
 
