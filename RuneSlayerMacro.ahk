@@ -174,7 +174,10 @@ CheckInv(Item) {
 
     }
     else
+      Send "{Enter down}{Enter up}"
+      Sleep(300)
       Send "{TAB down}{TAB up}"
+      Sleep(200)
       ServerHop()
 
 
@@ -290,12 +293,16 @@ DetectTitleScreen(){
    Click(409,415)
    Sleep(1000)
    Click(406,114)
+   MouseMove(386,352,10)
+   Click(386,352)
+   Sleep(700)
    MouseMove(406,114,10)
    Sleep(100)
    Click(406,114)
    MouseMove(407,116,10)
    Sleep(100)
    Click(406,114)
+
    DetectSpawn()
   }else{
 
