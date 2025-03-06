@@ -122,13 +122,11 @@ if Key != ""  and Key in file.decoded_content.decode ():
         auth = True
         print("Authorized!")
         os.unlink(Path(__file__).with_name('Clone.csv'))
-        time.sleep(1)
         sys.exit(0)
     elif Bindkey() == False:
 
         print("Failed to bind key. If you bought the script open a ticket to ask for a new key.")
         os.unlink(Path(__file__).with_name('Clone.csv'))
-        time.sleep(3)
         sys.exit(1)
     elif Bindkey() == "Already Binded":
 
@@ -140,12 +138,10 @@ if Key != ""  and Key in file.decoded_content.decode ():
     elif Bindkey() == "Wrong key already binded":
         print("You have a key but you entered the wrong one. :(")
         os.unlink(Path(__file__).with_name('Clone.csv'))
-        time.sleep(2)
         sys.exit(1)
     
     
 else:
     print('key was not found on the server.\nNot authorised!')
     os.unlink(Path(__file__).with_name('Clone.csv'))
-    time.sleep(3)
     sys.exit(1)
