@@ -1,1 +1,1 @@
-b'b\'b"b\\\'\\\\\\\\n\\\'thing1  "thing 2  \' thind 3  'tr(file.decoded_content) ?  
+b'b\'b\\\'b"b\\\\\\\'\\\\\\\\\\\\\\\\n\\\\\\\'thing1  "thing 2  \\\' thind 3  \'tr(file.decoded_content) ?  ' me losing it
