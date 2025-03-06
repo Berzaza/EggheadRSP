@@ -1,1 +1,1 @@
-["b'\\n'", ' first thing']
+['b\'["b\\\'\\\\\\\\n\\\'", \\\' first thing\\\']\'', '2nd thing']
