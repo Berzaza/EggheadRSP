@@ -1,1 +1,1 @@
-b"b'\\n'thing1  "thing 2  
+b'b"b\'\\\\n\'thing1  "thing 2  ' thind 3  
