@@ -1,2 +1,2 @@
-b'\n'
- first thing
+b"b'\\n'\n first thing"
+ 2nd thing
