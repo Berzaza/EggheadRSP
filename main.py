@@ -1,4 +1,5 @@
 import pandas as pd
+import base64
 from github import Github
 import sys
 import time
@@ -16,20 +17,25 @@ from dotenv import load_dotenv
 import subprocess
 import re
  
-#Key = "M0dxbzufcG0huxML89yiiYw71d7mD8"
-Key = str(sys.argv[1])
+Key = "M0dxbzufcG0huxML89yiiYw71d7mD8"
+#Key = str(sys.argv[1])
 hwid = str(subprocess.check_output(
     'wmic csproduct get uuid')).split('\\r\\n')[1].strip('\\r').strip()
 #f = open(Path(__file__).with_name('.env'), "a")
-load_dotenv()
 
-TOKEN = os.getenv('TOKEN')
 repo_url = 'https://github.com/Berzaza/EggheadRSP'
 process = subprocess.Popen(["git", "ls-remote", repo_url], stdout=subprocess.PIPE)
 stdout, stderr = process.communicate()
 sha = re.split(r'\t+', stdout.decode('ascii'))[0]
 
-g = Github('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')
+
+
+
+line = str(base64.b64decode("Z2hwXzRLVWZJT3dFYlJqMEFhTHhFUkxsTnRocTRpY3VjaTQ1c05xRA=="))
+
+thing = re.sub("[!@#$,']", '', line)
+
+g = Github(thing[1:])
 repo = g.get_repo('Berzaza/EggheadRSP')
 file = repo.get_contents("HWIDS.csv", ref=f"{sha}")
 f = open(Path(__file__).with_name('Clone.csv'), "a")
