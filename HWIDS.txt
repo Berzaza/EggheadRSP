@@ -1,2 +1,2 @@
-b'b\'b"b\\\'\\\\\\\\n\\\'\\\\n first thing"\\n 2nd thing\'\n third thing'
-fourth thing..
+b'b\'b\\\'b"b\\\\\\\'\\\\\\\\\\\\\\\\n\\\\\\\'\\\\\\\\n first thing"\\\\n 2nd thing\\\'\\n third thing\'\nfourth thing..'
+ fifth thing
