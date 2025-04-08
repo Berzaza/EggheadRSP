@@ -80,7 +80,7 @@ ChosenStam.Value := 3
 OptionsGui.Add("Button", "vStartReady", "Start-Farm").OnEvent("Click",startready_Button_Click)
 
 MyGui.Add("Picture", "x300 y150 w100 h100 BackgroundTrans ", A_ScriptDir "/imgs/egghead.png")
-WinSetTransparent 220, "EggheadsMacro.exe" ; change this for testing
+WinSetTransparent 220, "EggheadsMacro.ahk" ; change this for testing
 
 
 loopcount := 0
