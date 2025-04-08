@@ -45,7 +45,7 @@ LV.UseTab(1)
 
 MyGui.Add("Button", "vSaveData", "Press to save current settings.").OnEvent("Click",save_Button_Click)
 MyGui.Add("Text",,"Training:")
-PreferredItem := MyGui.AddDropDownList("vChosenStarterCard", ["Treadmill","Pull-up","Tool","Technique"])
+PreferredItem := MyGui.AddDropDownList("vChosenStarterCard", ["Treadmill","Pull-up","Bed Farm","Technique"])
 
 MyGui.Add("Text",,"Farms:")
 MyGui.Add("Button", "vStartFarm", "Start-Farm").OnEvent("Click",startfarm_Button_Click)
@@ -53,6 +53,7 @@ MyGui.Add("Button", "vStartFarm", "Start-Farm").OnEvent("Click",startfarm_Button
 MyGui.Add("Text",,"Options:")
 LeaveOnDeath := MyGui.Add("CheckBox", "vLeaveOnDeath", "Leave on death.")
 ShutdownOnDeath := MyGui.Add("CheckBox", "vShutdownOnDeath", "Shutdown PC on death.")
+AutoEat := MyGui.Add("CheckBox", "vAutoEat", "Auto Eat.")
 MyGui.Add("Picture", "x200 y350 w200 h200 BackgroundTrans ", A_ScriptDir "/imgs/egghead.png")
 MyGui.Show("w420 h600")
 
@@ -67,7 +68,7 @@ LV.UseTab(3)
 MyGui.Add("Text",,"If you experience a bug make a ticket," . "`n" . " explain the bug" . "`n" . " send a picture/video if you can " . "`n" . " and I'll help you best I can.")
 MyGui.Add("Picture", "x200 y150 w200 h200 BackgroundTrans ", A_ScriptDir "/imgs/egghead.png")
 LV.UseTab(5)
-OptionsGui.Add("Text",,"Training type:")
+Title := OptionsGui.Add("Text",,"Training type:")
 MachineSide := OptionsGui.AddDropDownList("vMachine_Side", ["Agility","Stamina"])
 MachineSide2 := OptionsGui.AddDropDownList("vMachine_Side2", ["Fast","Slow"])
 OptionsGui.Add("Text",,"Machine Level / Tool type:")
@@ -112,6 +113,8 @@ MaxFatigueAlert(){
 
 LoopCountAlert(){
     if UseWebhook.Value == 1 {
+        if PreferredItem.Value == 1 {
+
         embed := EmbedBuilder()
         webhook := Discord.Webhook(DiscordWebhook.Value)
         embed.setTitle("Treadmills")
@@ -130,6 +133,30 @@ LoopCountAlert(){
             embeds: [embed],
             files: [thumbnail]
         })
+
+        }else if PreferredItem.Value == 2{
+
+        embed := EmbedBuilder()
+        webhook := Discord.Webhook(DiscordWebhook.Value)
+        embed.setTitle("Pull-ups")
+        embed.setDescription("Starting Pull-up Round: " . loopcount)
+        embed.setAuthor({name:"Egghead's Macro",icon_url:thumbnail.attachmentName})
+        embed.setColor(0xFFFFFF)
+
+        embed.addFields([
+        {
+        name:"Current Pull-up Round: " . loopcount,
+        value: "nil"
+        },
+
+        ])
+            webhook.send({
+            embeds: [embed],
+            files: [thumbnail]
+        })
+
+        }
+
     }
 
 }
@@ -366,21 +393,26 @@ TechniqueFarm(){
     Send "{d down}"
     Sleep(1600)
     Send "{d up}"
-    if PixelSearch( &FoundX, &FoundY, 304, 371, 503, 568, 0x64FAC2,10){
+    if PixelSearch( &FoundX, &FoundY, 304, 371, 503, 568, 0x64FAC2,20){
         MouseMove(FoundX,FoundY+4)
         Click(FoundX,FoundY+4)
+        Sleep(10)
         MouseMove(FoundX,FoundY+8)
         Click(FoundX,FoundY+8)
-        Click()
-        Click()
-        Click()
+        Sleep(10)
         MouseMove(FoundX,FoundY+4)
-        Click()
-        Click()
-        Click()
-
-
-
+        Click(FoundX,FoundY+8)
+        Sleep(10)
+        MouseMove(FoundX,FoundY+4)
+        Click(FoundX,FoundY+4)
+        Sleep(10)
+        MouseMove(FoundX,FoundY+4)
+        Click(FoundX,FoundY+8)
+        Sleep(10)
+        MouseMove(FoundX,FoundY+4)
+        Click(FoundX,FoundY+4)
+        Sleep(10)
+        MouseClick "left", FoundX,FoundY,20
 
     }else{
         Click()
@@ -451,10 +483,13 @@ StartMachine(){
         return
     }
     if CheckIfMinFood() == true {
+        if AutoEat.Value == 1 {
         Loop{
 
         Sleep(100)
         } until EatFood() == true
+        }
+
 
     }
     loopcount := loopcount + 1
@@ -466,12 +501,13 @@ StartMachine(){
     if MachineSide.Value == 2{
     MouseMove(484, 357)
     MouseMove(481, 351)
+    Click()
     }else if MachineSide.Value == 1{
     MouseMove(314, 360)
     MouseMove(305, 363)
-
-    }
     Click()
+    }
+
     Sleep(200)
     Loop ChosenSlot.Value-1{
         MouseMove(555,364)
@@ -532,10 +568,19 @@ BedFarm(){
         }
 
     }
+    if CheckIfMinFood() == true {
+        EatFood()
+        Loop {
+        Sleep(100)
 
+
+        }until CheckIfMaxFood() == true
+    }
 
     MouseMove(408,330)
     MouseMove(405,333)
+    Click(408,330)
+    Click(408,330)
     Click(408,330)
         ;Squat Detection
    ; Text:="|<>FFFFFF-323232/989898-323232$41.S000001y0000k200001U60yEXrrj3AVBaBbY921gM3MG4zMw6EYN6kDQrBmRUHkuDbNrU040000008000000E0001"
@@ -554,6 +599,9 @@ BedFarm(){
         }
 
         Loop {
+            if MachineSide2.Value == 2 {
+            Sleep(1300)
+            }
         Click(408,330)
         }until CheckIfToolFatigue() == true
         if UseWebhook.Value == 1{
@@ -578,6 +626,9 @@ BedFarm(){
         }
 
         Loop {
+            if MachineSide2.Value == 2 {
+            Sleep(1300)
+            }
         Click(408,330)
         }until CheckIfToolFatigue() == true
         if UseWebhook.Value == 1{
@@ -665,6 +716,8 @@ startready_Button_Click(btn,info){
     if PreferredItem.Value == 1 {
         StartMachine()
 
+    }else if PreferredItem.Value == 2 {
+        StartMachine()
     }else if PreferredItem.Value == 3 {
         BedFarm()
     }
@@ -688,8 +741,7 @@ startfarm_Button_Click(btn, info)
 
 
     }
-    ;RejoinGame()
-    ;CheckInv("Platinum")
+
     if PreferredItem.Value == 1 {
 
         MyGui.Hide()
@@ -700,6 +752,15 @@ startfarm_Button_Click(btn, info)
         OptionsGui.Show("w300 h400")
 
 
+
+    }else if PreferredItem.Value == 2 {
+         MyGui.Hide()
+        dothing := false
+        Title.Visible := false
+        MachineSide.Visible := false
+        MachineSide2.Visible := false
+        ChosenSlot2.Visible := false
+        OptionsGui.Show("w300 h400")
 
     }else if PreferredItem.Value == 4 {
         TechniqueFarm()
@@ -729,3 +790,6 @@ startfarm_Button_Click(btn, info)
 
 
 }
+
+
+
